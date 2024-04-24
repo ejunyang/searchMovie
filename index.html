@@ -27,10 +27,11 @@
             <div class="header-wrap">
                 <h2 class="logo"><a onclick="window.location.reload()">Finder</a></h2>
                 <nav>
-                    <ul class="gnb">
-                        <li><a href="#" class="select">홈</a></li>
-                        <li><a href="#">영화</a></li>
-                        <li><a href="#">개봉예정</a></li>
+                    <ul id="gnb" class="gnb">
+                        <li><a href="" class="select">홈</a></li>
+                        <li><a href="" >영화</a></li>
+                        <li><a href="" >TV</a></li>
+                        <li><a href="" >개봉예정</a></li>
                     </ul>
                 </nav>
                 <!-- 검색 영역 -->
@@ -38,7 +39,7 @@
                     <div id="search">
                         <input type="text" id="searchInput" placeholder="제목을 입력해주세요."
                             aria-label="default input example">
-                        <button type="button" id="searchBtn"><i class="xi-search"></i></button>
+                        <button type="button" id="searchBtn" onclick="searchMovies();"><i class="xi-search"></i></button>
                     </div>
                 </div>
                 <!--  -->
@@ -47,24 +48,47 @@
         </header>
 
 
+        <div id="movieContainer">
         <!-- 슬라이드 영역 -->
-        <div class="swiper mySwiper">
+        <div id="swipe" class="swiper mySwiper">
             <div class="swiper-wrapper">
                 <div class="swiper-slide">
                     <div class="slide-txt">
-                        <h1>연애남매</h1>
-                        <span>내 혈육의 로맨스</span>
-                        <p>남매의 연애를 직관하다</p>
+                        <h1>위시</h1>
+                        <span>지금이야!</span>
+                        <p>우리의 소원이 이루어질 시간</p>
                     </div>
-                    <img src="main1.png" alt="" class="slide-img">
+                    <img src="img/main3.png" alt="" class="slide-img">
+                </div>
+
+                <div class="swiper-slide">
+                    <div class="slide-txt">
+                        <h1>웡카</h1>
+                        <span>꿈에서 시작된</span>
+                        <p>가장 달콤한 이야기</p>
+                    </div>
+                    <img src="img/main4.png" alt="" class="slide-img">
+                </div>
+                
+                <div class="swiper-slide">
+                    <div class="slide-txt">
+                        <h1>
+                            쿵푸팬더4
+                            <span>드림윅스 레전드 시리즈</span>
+                        </h1>
+                        <p>잭블랙은 오랜만이지</p>
+                    </div>
+                    <img src="img/main5.png" alt="" class="slide-img">
                 </div>
                 <div class="swiper-slide">
                     <div class="slide-txt">
-                        <h1>기생수</h1>
-                        <span>더 그레이</span>
-                        <p>인간들 사이에 완벽히 파고들어라</p>
+                        <h1>
+                            연애남매
+                            <span>내 혈육의 로맨스</span>
+                        </h1>
+                        <p>남매의 연애를 직관하다</p>
                     </div>
-                    <img src="main2.png" alt="" class="slide-img">
+                    <img src="img/main1.png" alt="" class="slide-img">
                 </div>
                 <div class="swiper-slide">
                     <div class="slide-txt">
@@ -74,27 +98,7 @@
                         </h1>
                         <p>인간들 사이에 완벽히 파고들어라</p>
                     </div>
-                    <img src="main1.png" alt="" class="slide-img">
-                </div>
-                <div class="swiper-slide">
-                    <div class="slide-txt">
-                        <h1>
-                            연애남매
-                            <span>내 혈육의 로맨스</span>
-                        </h1>
-                        <p>남매의 연애를 직관하다</p>
-                    </div>
-                    <img src="main1.png" alt="" class="slide-img">
-                </div>
-                <div class="swiper-slide">
-                    <div class="slide-txt">
-                        <h1>
-                            연애남매
-                            <span>내 혈육의 로맨스</span>
-                        </h1>
-                        <p>남매의 연애를 직관하다</p>
-                    </div>
-                    <img src="main1.png" alt="" class="slide-img">
+                    <img src="img/main2.png" alt="" class="slide-img">
                 </div>
             </div>
             <div class="swiper-button-next"></div>
@@ -103,9 +107,9 @@
         </div>
 
 
-        <div class="container innerwrap">
+        <div id="container" class="innerwrap">
             <!-- 카드 영역 -->
-            <div class="title-area">
+            <div id="title-area" class="title-area">
                 <span class="label">파인더에서 원하는 영화를 찾아봐!</span>
             </div>
             <div id="mycards" class="row row-cols-1 row-cols-md-4 g-4">
@@ -113,7 +117,7 @@
                         <div class="card h-100">
                             <img src="..." class="card-img-top" alt="...">
                             <div class="card-body">
-                                <h5 class="card-title">Card title</h5>
+                                <h2 class="card-title">Card title</h2>
                                 <p class="card-text">This is a longer card with supporting text below as a natural
                                     lead-in to additional content. This content is a little bit longer.</p>
                             </div>
@@ -122,13 +126,14 @@
 
             </div>
         </div>
+    </div>
 
         <!-- Swiper JS -->
         <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
 
         <!-- Initialize Swiper -->
         <script>
-            var swiper = new Swiper(".mySwiper", {
+            let swiper = new Swiper(".mySwiper", {
                 loop: true,
                 autoplay: {
                    delay: 5000,

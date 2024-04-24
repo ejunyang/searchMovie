@@ -75,6 +75,12 @@ nav {
 .gnb li a{
     font-size: 20px;
     color: #a5a5a5;
+    transition: all .3s ease;
+}
+
+.gnb li a:hover{
+    color:#fff;
+    cursor: pointer;
 }
 
 .gnb li a.select{
@@ -208,6 +214,8 @@ button .xi-search {
     white-space: normal;
     color: var(--desc);
     margin: 5px 0 10px;
+    line-height: 1.5em;
+    font-size: 13px;
 }
 
 .card-title{
