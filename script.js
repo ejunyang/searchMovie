@@ -47,7 +47,7 @@ fetch('https://api.themoviedb.org/3/movie/popular?language=ko-KR&page=1', option
         const container = document.querySelector('#mycards')
         const movieArr = container.querySelectorAll('.col');
 
-        let templete = ``; // const 하지말것, 재할당 불가
+        // let templete = ``; // const 하지말것, 재할당 불가
         movieList.forEach(a => {
             let image = 'https://image.tmdb.org/t/p/w500' + a['poster_path'];
             let title = a['title'];
@@ -56,23 +56,47 @@ fetch('https://api.themoviedb.org/3/movie/popular?language=ko-KR&page=1', option
             let movieid = a['id'];
 
 
+            const card = document.createElement('div');
+            card.className = 'col';
+            const img = document.createElement('img');
+            img.className = 'card-img-top';
+            const titleEl = document.createElement('h2');
+            titleEl.className = 'card-title'
+            const overviewEl = document.createElement('p');
+            overviewEl.className = 'card-text';
+            const voteEl = document.createElement('p');
+            voteEl.className = 'card-vote';
+
+
+            img.src = image;
+            titleEl.innerText = title;
+            overviewEl.innerText = overview;
+            voteEl.innerText = vote;
+
+            card.append(img, titleEl, overviewEl, voteEl);
+
+            document.getElementById('mycards').append(card);
+            card.addEventListener('click', () => {
+                alert("영화 ID : " + movieid);
+            })
+
 
             // 카드 템플릿 생성
-            templete += `
-            <div class="col">
-            <a href=${movieid}>
-                <img src=${image} class="card-img-top">
-                 <div class="card-body">
-                    <h2 class="card-title">${title}</h2>
-                    <p class="card-text">${overview}</p>
-                    <p class="card-vote">★ ${vote}</p>
-                 </div>
-             </a>
-            </div>`;
+            // templete += `
+            // <div class="col">
+            // <a href=${movieid}>
+            //     <img src=${image} class="card-img-top">
+            //      <div class="card-body">
+            //         <h2 class="card-title">${title}</h2>
+            //         <p class="card-text">${overview}</p>
+            //         <p class="card-vote">★ ${vote}</p>
+            //      </div>
+            //  </a>
+            // </div>`;
 
 
 
-            document.getElementById('mycards').innerHTML = templete;
+            // document.getElementById('mycards').innerHTML = templete;
 
 
         });
