@@ -228,5 +228,14 @@ button .xi-search {
 .g-4{
     --bs-gutter-y: 5rem
 }
+
+
+.hidden{
+    display:none;
+}
+
+.card{
+    background: none;
+}
 /* 카드 영역 끝 */
 /* main 끝 */

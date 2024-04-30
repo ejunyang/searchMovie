@@ -1,3 +1,4 @@
+
 document.addEventListener('DOMContentLoaded', function () {
     window.addEventListener('scroll', topFix); //페이지 스크롤시 topFix() 실행
 
@@ -18,10 +19,6 @@ document.addEventListener('DOMContentLoaded', function () {
 
 
 
-
-
-
-
 // title(제목), 
 // overview(내용 요약), 
 // poster_path(포스터 이미지 경로), 
@@ -38,98 +35,66 @@ const options = {
     }
 };
 
-
-// 영화 데이터 조회
 fetch('https://api.themoviedb.org/3/movie/popular?language=ko-KR&page=1', options)
     .then(response => response.json())
     .then((data) => {
         let movieList = data['results'];
-        const container = document.querySelector('#mycards')
-        const movieArr = container.querySelectorAll('.col');
 
-        // let templete = ``; // const 하지말것, 재할당 불가
-        movieList.forEach(a => {
-            let image = 'https://image.tmdb.org/t/p/w500' + a['poster_path'];
-            let title = a['title'];
-            let overview = a['overview'];
-            let vote = a['vote_average'].toFixed(1); // 소수점 1자리수까지 노출
-            let movieid = a['id'];
-
-
-            const card = document.createElement('div');
-            card.className = 'col';
-            const img = document.createElement('img');
-            img.className = 'card-img-top';
-            const titleEl = document.createElement('h2');
-            titleEl.className = 'card-title'
-            const overviewEl = document.createElement('p');
-            overviewEl.className = 'card-text';
-            const voteEl = document.createElement('p');
-            voteEl.className = 'card-vote';
-
-
-            img.src = image;
-            titleEl.innerText = title;
-            overviewEl.innerText = overview;
-            voteEl.innerText = vote;
-
-            card.append(img, titleEl, overviewEl, voteEl);
-
-            document.getElementById('mycards').append(card);
-            card.addEventListener('click', () => {
-                alert("영화 ID : " + movieid);
-            })
-
-
-            // 카드 템플릿 생성
-            // templete += `
-            // <div class="col">
-            // <a href=${movieid}>
-            //     <img src=${image} class="card-img-top">
-            //      <div class="card-body">
-            //         <h2 class="card-title">${title}</h2>
-            //         <p class="card-text">${overview}</p>
-            //         <p class="card-vote">★ ${vote}</p>
-            //      </div>
-            //  </a>
-            // </div>`;
-
-
-
-            // document.getElementById('mycards').innerHTML = templete;
-
-
+        movieList.forEach(movie => {
+            addCard(movie)
         });
-    });
+    })
+    .then(searchMovies)
+    .catch((err) => console.error(err));
+
+
+
+function addCard(movie) {
+    let image = 'https://image.tmdb.org/t/p/w500' + movie.poster_path;
+    let title = movie.title
+    let overview = movie.overview;
+    let vote = '★ ' + movie.vote_average.toFixed(1); // 소수점 1자리수까지 노출
+    let card = document.createElement('div');
+    card.className = 'col';
+
+    card.innerHTML = 
+    `
+    <div class="card">
+        <img src=${image} class="card-img-top" alt="포스터">
+        <div class="card-body">
+            <h2 class="card-title">${title}</h2>
+            <p class="card-text">${overview}</p>
+            <p class="card-vote">${vote}</p>
+        </div>
+    </div>
+    `;
+
+    card.addEventListener('click', () => alert(`영화 id : ${movie.id}`));
+    mycards.append(card);
+
+}
 
 
 
 // 검색 기능
 function searchMovies() {
-    const container = document.querySelector('#mycards')
-    const movieArr = container.querySelectorAll('.col');
 
-    let movieTitleArr = []; // 초기화, 영화 타이틀 배열
-    for (let i = 0; i < movieArr.length; i++) { // 배열 순회
-        movieTitleArr[i] = movieArr[i].getElementsByTagName('h2')[0].innerText; // movieTitle 배열에 만들어진 카드의 <h2> 0번째 ~ 타이틀 텍스트 저장
-        movieArr[i].style = 'display:none';
-        //console.log(movieArr[i].getElementsByTagName('h2')[0]);
+    const mycards = document.querySelector('#mycards')
+    const movieCard = mycards.querySelectorAll('.col');
+    const searchInput = document.querySelector('#searchInput');
+    const searchBtn = document.querySelector("#searchBtn");
+
+    function searchHandle(e){
+        e.preventDefault();
+        let userInput = searchInput.value;
+
+        movieCard.forEach((el) => {
+            el.classList.remove('hidden');
+            let movieTitle = el.getElementsByTagName('h2')[0].innerText;
+            if (!movieTitle.toLowerCase().includes(userInput)) {
+                el.classList.add("hidden");
+            }
+        })
     }
-
-
-    const searchInput = document.getElementById('searchInput').value;  // 사용자 입력 값 변수 할당
-
-    let movieTitle = movieTitleArr.filter(search => search.toLowerCase().includes(searchInput))[0];
-    console.log(searchInput);
-
-    for (let i = 0; i < movieTitleArr.length; i++) {
-        //console.log(movieTitle, movieTitleArr[i]);
-        if (movieTitle === movieTitleArr[i]) { // 배열 === 스트링 false
-            document.getElementById('swipe').style = 'display:none';
-            document.getElementById('title-area').style = 'display:none';
-            movieArr[i].style = 'display:block';
-            console.log('display block');
-        }
-    }
-
+    searchBtn.addEventListener("click", searchHandle);
 }
