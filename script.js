@@ -90,7 +90,7 @@ function searchMovies() {
 
         movieCard.forEach((el) => {
             el.classList.remove('hidden');
-            let movieTitle = title.filter(tit => tit.toLowerCase().includes(userInput)[0]);
+            let movieTitle = el.getElementsByTagName('h2')[0].innerText;
             if (!movieTitle.toLowerCase().includes(userInput)) {
                 el.classList.add("hidden");
             }
